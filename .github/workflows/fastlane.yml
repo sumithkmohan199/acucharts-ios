@@ -23,7 +23,6 @@ jobs:
 
       - name: Run Fastlane Match
         env:
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           FASTLANE_USER: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.APP_SPECIFIC_PW }}
         run: |
