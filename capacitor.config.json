@@ -1,0 +1,10 @@
+{
+  "appId": "com.kendra.acucharts",
+  "appName": "AcuCharts",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
