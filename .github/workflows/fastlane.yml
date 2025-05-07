@@ -1,0 +1,30 @@
+name: Setup iOS Certificates with Match
+
+on:
+  workflow_dispatch: # manual trigger from GitHub UI
+
+jobs:
+  match_setup:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Fastlane
+        run: sudo gem install fastlane -NV
+
+      - name: Setup SSH for Match Repo
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.MATCH_REPO_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Run Fastlane Match
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_USER: ${{ secrets.APPLE_ID }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PW }}
+        run: |
+          fastlane match appstore --readonly false --git_url https://github.com/sumithkmohan199/acucharts-ios.git
